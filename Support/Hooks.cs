@@ -157,12 +157,13 @@ namespace PlayWrightWithSpecflowCSharp.Support
         [AfterScenario]
         public async Task SignOutOfApplication(FeatureContext featureContext, ScenarioContext scenarioContext, IPage webpage)
         {
-            ILocator homepageSignoutIcon = webpage.Locator("");
+            ILocator homepageSignoutIcon = webpage.Locator("#test");
             ILocator homepageSignoutButton = webpage.Locator("//*[@type='button']//*[text()='Logout']");
             ILocator loginpageSignInButton = webpage.Locator("//button[text()='Sign in']");
             if (!featureContext.FeatureInfo.Tags.Contains("skipSignOut") || !scenarioContext.ScenarioInfo.Tags.Contains("skipSignOut"))
             {
-                bool successfulSignIn = await homepageSignoutIcon.IsVisibleAsync();
+                //bool successfulSignIn = await homepageSignoutIcon.IsVisibleAsync();
+                bool successfulSignIn = true;
                 if (successfulSignIn)
                 {
                     /*
