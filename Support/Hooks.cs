@@ -86,29 +86,7 @@ namespace PlayWrightWithSpecflowCSharp.Support
 
         }
 
-        [BeforeFeature(Order = 2)]
-        public static async Task InitializeToken(FeatureContext featureContext, IBrowserDriver _browserDr, IPage webpage)
-        {
-            await _browserDr.NaviagateToAppURL(webpage);
-
-            async Task InputCredentials(string useremail, string userpass)
-            {
-                await webpage.Locator("input#email").ClearandFill(useremail);
-                await webpage.Locator("input#password").ClearandFill(userpass);
-                await webpage.Locator("button#next").ClickAsync();
-            }
-
-            if (featureContext.FeatureInfo.Tags.Contains("LoginAsLabDirector"))
-            {
-                string useremail = CommonFunctions.GetUsernameFromConfigByIdentifier("labdirector");
-                string userpass = CommonFunctions.GetPasswordFromConfigByIdentifier("labdirector");
-                await InputCredentials(useremail, userpass);
-
-            }
-
-        }
-
-        [BeforeScenario]
+        [BeforeScenario(Order = 1)]
         public void LogScenarioName(FeatureContext featureContext, ScenarioContext scenarioContext)
         {
             string featureTitle = featureContext.FeatureInfo.Title;
@@ -117,6 +95,35 @@ namespace PlayWrightWithSpecflowCSharp.Support
             Console.WriteLine("Beginning scenario execution :" + currentDateTimeOffset.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
             Console.WriteLine($"Executing feature_scenario: {featureTitle}_{scenarioTitle}");
             Console.WriteLine($"ScenarioTitle : {scenarioTitle.Replace(" ", "")}");
+
+        }
+
+        [BeforeScenario(Order = 2)]
+        public async Task InitializeToken(FeatureContext featureContext, IBrowserDriver _browserDr, IPage webpage, ScenarioContext scenarioContext)
+        {
+            await _browserDr.NaviagateToAppURL(webpage);
+
+            async Task InputCredentials(string useremail, string userpass)
+            {
+                /*
+                //Implement login functionality
+                await webpage.Locator("input#email").ClearandFill(useremail);
+                await webpage.Locator("input#password").ClearandFill(userpass);
+                await webpage.Locator("button#next").ClickAsync();*/
+                Console.WriteLine("Successfully signed in before scenario");
+
+            }
+
+            if (!(featureContext.FeatureInfo.Tags.Contains("skipLogin") || scenarioContext.ScenarioInfo.Tags.Contains("skipLogin")))
+            {
+                if (featureContext.FeatureInfo.Tags.Contains("LoginAsAdmin") || scenarioContext.ScenarioInfo.Tags.Contains("LoginAsAdmin"))
+                {
+                    string useremail = CommonFunctions.GetUsernameFromConfigByIdentifier("labdirector");
+                    string userpass = CommonFunctions.GetPasswordFromConfigByIdentifier("labdirector");
+                    await InputCredentials(useremail, userpass);
+                }
+            }
+
         }
 
         [AfterStep]
@@ -143,6 +150,29 @@ namespace PlayWrightWithSpecflowCSharp.Support
             }
             DateTimeOffset currentDateTimeOffset = DateTimeOffset.Now;
             Console.WriteLine("Step completed : " + currentDateTimeOffset.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
+
+        }
+
+
+        [AfterScenario]
+        public async Task SignOutOfApplication(FeatureContext featureContext, ScenarioContext scenarioContext, IPage webpage)
+        {
+            ILocator homepageSignoutIcon = webpage.Locator("");
+            ILocator homepageSignoutButton = webpage.Locator("//*[@type='button']//*[text()='Logout']");
+            ILocator loginpageSignInButton = webpage.Locator("//button[text()='Sign in']");
+            if (!featureContext.FeatureInfo.Tags.Contains("skipSignOut") || !scenarioContext.ScenarioInfo.Tags.Contains("skipSignOut"))
+            {
+                bool successfulSignIn = await homepageSignoutIcon.IsVisibleAsync();
+                if (successfulSignIn)
+                {
+                    /*
+                    //Implement logout function
+                    await homepageSignoutIcon.ClickAsync();
+                    await homepageSignoutButton.ClickAsync();
+                    await loginpageSignInButton.WaitForElementVisibility();*/
+                    Console.WriteLine("Successfully signed out after scenario");
+                }
+            }
 
         }
 
