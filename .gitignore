@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Specflow generate Files
+**/Features/*feature.cs
+**/Features/**/*.feature.cs

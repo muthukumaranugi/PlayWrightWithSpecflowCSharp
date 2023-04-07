@@ -12,10 +12,12 @@ namespace PlayWrightWithSpecflowCSharp.StepDefinitions
     {
         IPage page;
         HeroKuappHomePage herokuHomePage;
+        HeroKuappCheckboxPage herokuCheckboxPage;
         public StepDefinitions(IPage webpage)
         {
             page = webpage;
             herokuHomePage = new HeroKuappHomePage(page);
+            herokuCheckboxPage = new HeroKuappCheckboxPage(page);
         }
     }
 }

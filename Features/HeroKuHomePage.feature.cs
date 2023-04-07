@@ -75,11 +75,11 @@ namespace PlayWrightWithSpecflowCSharp.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify the home page links")]
-        [NUnit.Framework.CategoryAttribute("tag1")]
+        [NUnit.Framework.CategoryAttribute("smoketest")]
         public virtual void VerifyTheHomePageLinks()
         {
             string[] tagsOfScenario = new string[] {
-                    "tag1"};
+                    "smoketest"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify the home page links", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 6

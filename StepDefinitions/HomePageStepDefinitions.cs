@@ -5,7 +5,8 @@ namespace PlayWrightWithSpecflowCSharp.StepDefinitions
 {   
     public partial class StepDefinitions
     {
-       
+
+        [Given(@"user is navigated to the home page")]
         [When(@"user is navigated to the home page")]
         public async Task WhenUserIsNavigatedToTheHomePage()
         {
@@ -18,5 +19,14 @@ namespace PlayWrightWithSpecflowCSharp.StepDefinitions
             await herokuHomePage.VerifyLinks("Frames");
             await herokuHomePage.PrintAllTextContents();
         }
+
+        [Given(@"Navigates to the ""([^""]*)"" link from home page")]
+        [When(@"Navigates to the ""([^""]*)"" link from home page")]
+        public async Task GivenNavigatesToTheLinkFromHomePage(string checkboxes)
+        {
+            await herokuHomePage.NavigateToPage("Checkboxes");
+        }
+     
+
     }
 }

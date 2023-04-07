@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayWrightWithSpecflowCSharp.Support;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,10 @@ namespace PlayWrightWithSpecflowCSharp.PageObjects
         public async Task NavigateToPage(string pageName)
         {
             ILocator TestExamplePageNavLink = page.GetByText(pageName).Nth(0);
+            ILocator PageHeading = page.GetByRole(AriaRole.Heading, new() { Name = pageName });
             await TestExamplePageNavLink.ClickAsync();
-
+            await PageHeading.WaitForElementVisibility();
+            Console.WriteLine($"Navigated to the Page - {pageName}");
         }
 
         public async Task VerifyLinks(string pageName)
@@ -40,6 +43,7 @@ namespace PlayWrightWithSpecflowCSharp.PageObjects
         {
             page.GetByText("Available Examples");
             await heading.IsVisibleAsync();
+            Console.WriteLine("Heroku app home page is visible with title \"Available Examples\"");
         }
 
 
