@@ -22,9 +22,9 @@ namespace PlayWrightWithSpecflowCSharp.StepDefinitions
 
         [Given(@"Navigates to the ""([^""]*)"" link from home page")]
         [When(@"Navigates to the ""([^""]*)"" link from home page")]
-        public async Task GivenNavigatesToTheLinkFromHomePage(string checkboxes)
+        public async Task GivenNavigatesToTheLinkFromHomePage(string PageName)
         {
-            await herokuHomePage.NavigateToPage("Checkboxes");
+            await herokuHomePage.NavigateToPage(PageName);
         }
      
 
