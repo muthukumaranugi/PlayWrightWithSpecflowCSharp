@@ -61,9 +61,7 @@ namespace PlayWrightWithSpecflowCSharp.Support
                 throw new Exception($"Playwright exited with code {exitCode}");
             }
 
-
         }
-
 
         [BeforeFeature(Order = 1)]
         public static void CreateBrowserInstance(IObjectContainer _objectContainer, FeatureContext featureContext)
@@ -85,98 +83,6 @@ namespace PlayWrightWithSpecflowCSharp.Support
             _browserDr.StartTracerInDriver(featureContext.FeatureInfo.Title, _browserContext).GetAwaiter().GetResult();
 
         }
-
-        [BeforeScenario(Order = 1)]
-        public void LogScenarioName(FeatureContext featureContext, ScenarioContext scenarioContext)
-        {
-            string featureTitle = featureContext.FeatureInfo.Title;
-            string scenarioTitle = scenarioContext.ScenarioInfo.Title;
-            DateTimeOffset currentDateTimeOffset = DateTimeOffset.Now;
-            Console.WriteLine("Beginning scenario execution :" + currentDateTimeOffset.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
-            Console.WriteLine($"Executing feature_scenario: {featureTitle}_{scenarioTitle}");
-            Console.WriteLine($"ScenarioTitle : {scenarioTitle.Replace(" ", "")}");
-
-        }
-
-        [BeforeScenario(Order = 2)]
-        public async Task InitializeToken(FeatureContext featureContext, IBrowserDriver _browserDr, IPage webpage, ScenarioContext scenarioContext)
-        {
-            await _browserDr.NaviagateToAppURL(webpage);
-
-            async Task InputCredentials(string useremail, string userpass)
-            {
-                /*
-                //Implement login functionality
-                await webpage.Locator("input#email").ClearandFill(useremail);
-                await webpage.Locator("input#password").ClearandFill(userpass);
-                await webpage.Locator("button#next").ClickAsync();*/
-                Console.WriteLine("Successfully signed in before scenario");
-
-            }
-
-            if (!(featureContext.FeatureInfo.Tags.Contains("skipLogin") || scenarioContext.ScenarioInfo.Tags.Contains("skipLogin")))
-            {
-                if (featureContext.FeatureInfo.Tags.Contains("LoginAsAdmin") || scenarioContext.ScenarioInfo.Tags.Contains("LoginAsAdmin"))
-                {
-                    string useremail = CommonFunctions.GetUsernameFromConfigByIdentifier("labdirector");
-                    string userpass = CommonFunctions.GetPasswordFromConfigByIdentifier("labdirector");
-                    await InputCredentials(useremail, userpass);
-                }
-            }
-
-        }
-
-        [AfterStep]
-        public void AddScreenshotsandLogTime(ScenarioContext scenarioContext, ISpecFlowOutputHelper _specFlowOutputHelper, IPage webpage)
-        {
-
-            IPage page = webpage;
-            var testStatus = scenarioContext.TestError;
-            if (testStatus != null)
-            {
-                var screenshot = CommonFunctions.TakeScreenshotMethod(page).GetAwaiter().GetResult();
-                var artifactDirectory = Path.Combine(Directory.GetCurrentDirectory(), "FailedScreenshots");
-                if (!Directory.Exists(artifactDirectory))
-                {
-                    Directory.CreateDirectory(artifactDirectory);
-                }
-                string title = scenarioContext.ScenarioInfo.Title;
-                string fileName = "error_" + title + DateTime.Now.ToString("yyyy-MM-dd-HH_mm_ss") + "_screenshot.png";
-                var sourceFilePath = Path.Combine(artifactDirectory, fileName);
-                File.WriteAllBytes(sourceFilePath, screenshot);
-                var finalPath = Path.GetFullPath(sourceFilePath);
-                _specFlowOutputHelper.WriteLine("Error Screenshot");
-                _specFlowOutputHelper.AddAttachment(fileName);
-            }
-            DateTimeOffset currentDateTimeOffset = DateTimeOffset.Now;
-            Console.WriteLine("Step completed : " + currentDateTimeOffset.ToString("yyyy-MM-ddTHH:mm:ss.fffzzz"));
-
-        }
-
-
-        [AfterScenario]
-        public async Task SignOutOfApplication(FeatureContext featureContext, ScenarioContext scenarioContext, IPage webpage)
-        {
-            ILocator homepageSignoutIcon = webpage.Locator("#test");
-            ILocator homepageSignoutButton = webpage.Locator("//*[@type='button']//*[text()='Logout']");
-            ILocator loginpageSignInButton = webpage.Locator("//button[text()='Sign in']");
-            if (!featureContext.FeatureInfo.Tags.Contains("skipSignOut") || !scenarioContext.ScenarioInfo.Tags.Contains("skipSignOut"))
-            {
-                //bool successfulSignIn = await homepageSignoutIcon.IsVisibleAsync();
-                bool successfulSignIn = true;
-                if (successfulSignIn)
-                {
-                    /*
-                    //Implement logout function
-                    await homepageSignoutIcon.ClickAsync();
-                    await homepageSignoutButton.ClickAsync();
-                    await loginpageSignInButton.WaitForElementVisibility();*/
-                    Console.WriteLine("Successfully signed out after scenario");
-                }
-            }
-
-        }
-
 
         [AfterFeature]
         public static void CloseBrowserInstance(FeatureContext featureContext, IBrowser _browser, IBrowserDriver _browserDr, IBrowserContext _browserContext, IPage webpage)
