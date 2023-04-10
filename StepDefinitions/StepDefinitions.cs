@@ -19,12 +19,14 @@ namespace PlayWrightWithSpecflowCSharp.StepDefinitions
         HeroKuappHomePage herokuHomePage;
         HeroKuappCheckboxPage herokuCheckboxPage;
         HeroKuappIFramePage herokuIFramePage;
+        HeroKuappJSAlertsPage herokuJSAlertsPage;
         public StepDefinitions(IPage webpage, IBrowserDriver browserDriver)
         {
             page = webpage;
             herokuHomePage = new HeroKuappHomePage(page);
             herokuCheckboxPage = new HeroKuappCheckboxPage(page);
             herokuIFramePage = new HeroKuappIFramePage(page);
+            herokuJSAlertsPage = new HeroKuappJSAlertsPage(page);
             //_browserDr = browserDriver;
         }
 

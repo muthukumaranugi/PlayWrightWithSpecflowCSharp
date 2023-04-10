@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <SpecFlowObsoleteCodeBehindFiles Remove="Features\HeroKuHomePage - Copy.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\HeroKuIFramePage - Copy.feature.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +28,9 @@
     <Compile Update="Features\HeroKuCheckBoxPage.feature.cs">
       <DependentUpon>HeroKuCheckBoxPage.feature</DependentUpon>
     </Compile>
+    <Compile Update="Features\HeroKuAlertsPage.feature.cs">
+      <DependentUpon>HeroKuAlertsPage.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +41,10 @@
 
   <ItemGroup>
     <SpecFlowFeatureFiles Update="Features\HeroKuCheckBoxPage.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\HeroKuAlertsPage.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>
