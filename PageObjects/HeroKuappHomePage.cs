@@ -16,6 +16,8 @@ namespace PlayWrightWithSpecflowCSharp.PageObjects
         public async Task NavigateToPage(string pageName)
         {
             ILocator TestExamplePageNavLink = page.GetByText(pageName).Nth(0);
+            pageName = pageName == "Sortable Data Tables" ? "Data Tables"
+                       : pageName;
             ILocator PageHeading = page.GetByRole(AriaRole.Heading, new() { Name = pageName });
             await TestExamplePageNavLink.ClickAsync();
             await PageHeading.WaitForElementVisibility();
