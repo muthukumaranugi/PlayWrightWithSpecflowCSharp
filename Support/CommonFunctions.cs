@@ -10,6 +10,7 @@ namespace PlayWrightWithSpecflowCSharp.Support
 {
     public class CommonFunctions
     {
+        public static string runSuffix { get; } = Guid.NewGuid().ToString("N");
         public static void SetCurrentDirectory()
         {
             string basePath = ConfigReader.baseStoragePath;
@@ -56,6 +57,29 @@ namespace PlayWrightWithSpecflowCSharp.Support
                 }
             }
             return password;
+        }
+
+        public static string CheckRunSuffix(string field)
+        {
+            if (!String.IsNullOrEmpty(field) && !field.EndsWith(runSuffix))
+            {
+                field = String.Format("{0}_{1}", field, runSuffix);
+            }
+
+            return field;
+        }
+
+        public static string RemoveRunSuffix(string field)
+        {
+            if (!String.IsNullOrEmpty(field))
+            {
+                if (field.EndsWith(runSuffix))
+                {
+                    field = field.Remove(field.Length - runSuffix.Length - 1);
+                }
+            }
+
+            return field;
         }
 
     }

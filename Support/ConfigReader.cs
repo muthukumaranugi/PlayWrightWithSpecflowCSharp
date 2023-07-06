@@ -26,7 +26,9 @@ namespace PlayWrightWithSpecflowCSharp.Support
         //For current current directory, provide "default", else provide the actual paths
         public static string baseStoragePath;
         public static string addlTracingAtBrowser;
-
+        public static dynamic azureADAuthInfo;
+        public static string azureADBaseUrl;
+        public static string azureADDomain;
 
     }
 }

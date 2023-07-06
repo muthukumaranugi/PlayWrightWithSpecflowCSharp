@@ -48,6 +48,10 @@ namespace PlayWrightWithSpecflowCSharp.Support
             ConfigReader.loginURL = config["loginPageURL"];
             ConfigReader.baseStoragePath = config["BaseStoragePath"];
             ConfigReader.addlTracingAtBrowser = config["AddlTracingAtBrowser"];
+            ConfigReader.azureADAuthInfo = config.GetSection("AzureADAuthInfo");
+            ConfigReader.azureADBaseUrl = config["azureADBaseUrl"];
+            ConfigReader.azureADDomain = config["AzureADDomain"];
+
             CommonFunctions.SetCurrentDirectory();
             var artifactDirectory = Path.Combine(Directory.GetCurrentDirectory(), "FailedScreenshots");
             if (Directory.Exists(artifactDirectory))
