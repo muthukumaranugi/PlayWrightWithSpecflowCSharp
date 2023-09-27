@@ -16,5 +16,8 @@ namespace CAP.SpecTests.Drivers
         public void GetOne<T>(string entity);
         public void DeleteOne<T>(string deleteEntity);
         public string GetResponseErrorMessage();
+        public void CreateOneBookUser<T>(T entity);
+        public void GetOneBookUser<T>(string id);
+        public void DeleteOneBookUser<T>(string id);
     }
 }

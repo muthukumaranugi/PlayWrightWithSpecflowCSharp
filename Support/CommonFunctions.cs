@@ -82,5 +82,11 @@ namespace PlayWrightWithSpecflowCSharp.Support
             return field;
         }
 
+        public static int GetUniqueInteger()
+        {
+            int timestamp = Convert.ToInt32(DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+            return timestamp;
+        }
+
     }
 }

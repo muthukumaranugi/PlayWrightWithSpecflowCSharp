@@ -1,4 +1,5 @@
 ﻿using BoDi;
+using CAP.SpecTests.Drivers;
 using PlayWrightWithSpecflowCSharp.Drivers;
 using PlayWrightWithSpecflowCSharp.PageObjects;
 using PlayWrightWithSpecflowCSharp.Support;
@@ -21,6 +22,7 @@ namespace PlayWrightWithSpecflowCSharp.StepDefinitions
         HeroKuappIFramePage herokuIFramePage;
         HeroKuappJSAlertsPage herokuJSAlertsPage;
         HeroKuappTablePage herokutablePage;
+        IAzureADApiDriver apiDriver;
         public StepDefinitions(IPage webpage, IBrowserDriver browserDriver)
         {
             page = webpage;
@@ -29,6 +31,7 @@ namespace PlayWrightWithSpecflowCSharp.StepDefinitions
             herokuIFramePage = new HeroKuappIFramePage(page);
             herokuJSAlertsPage = new HeroKuappJSAlertsPage(page);
             herokutablePage = new HeroKuappTablePage(page);
+            apiDriver= new AzureADApiDriver();
             //_browserDr = browserDriver;
         }
 

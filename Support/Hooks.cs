@@ -1,4 +1,5 @@
 ﻿using BoDi;
+using CAP.SpecTests.Drivers;
 using Gherkin;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
@@ -34,7 +35,7 @@ namespace PlayWrightWithSpecflowCSharp.Support
                .Build();
             _objectContainer.RegisterInstanceAs(config);
             _objectContainer.RegisterTypeAs<BrowserDriver, IBrowserDriver>();
-
+            _objectContainer.RegisterTypeAs<AzureADApiDriver, IAzureADApiDriver>();
 
             ConfigReader.appURL = config["applicationURL"];
             ConfigReader.browser = config["browerName"];

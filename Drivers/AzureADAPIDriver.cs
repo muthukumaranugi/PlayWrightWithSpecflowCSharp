@@ -1,4 +1,5 @@
-﻿using CAP.SpecTests.Support;
+﻿using CAP.SpecTests.Models;
+using CAP.SpecTests.Support;
 using NUnit.Framework;
 using PlayWrightWithSpecflowCSharp.Support;
 using RestSharp;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CAP.SpecTests.Drivers
@@ -18,7 +20,8 @@ namespace CAP.SpecTests.Drivers
         
         public AzureADApiDriver()
         {
-            client = new RestClient(ConfigReader.azureADBaseUrl);
+            //client = new RestClient(ConfigReader.azureADBaseUrl);
+            client = new RestClient("https://fakerestapi.azurewebsites.net/api/v1/");
             LastResponse = new RestResponse();
         }
 
@@ -95,6 +98,31 @@ namespace CAP.SpecTests.Drivers
             request.AddHeader("Content-Type", "application/json");
             var resp = client.Execute(request);
             Console.WriteLine($"The api request for deleting '{deleteEntity}' from '{ModelName}' is completed");
+            LastResponse = resp;
+        }
+
+        public void CreateOneBookUser<T>(T entity)
+        {
+            Console.WriteLine("Printing body to be added"+ JsonSerializer.Serialize(entity));
+            var request = new RestRequest("Users", Method.Post);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddBody(entity, ContentType.Json);
+            var resp = client.Execute(request);
+            LastResponse = resp;
+            
+        }
+
+        public void GetOneBookUser<T>(string id)
+        {
+            var request = new RestRequest($"Users/{id}", Method.Get);
+            var resp = client.Execute(request);
+            LastResponse = resp;
+        }
+
+        public void DeleteOneBookUser<T>(string id)
+        {
+            var request = new RestRequest($"Users/{id}", Method.Delete);
+            var resp = client.Execute(request);
             LastResponse = resp;
         }
 
